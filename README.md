@@ -61,7 +61,7 @@ A maioria das operações no Git só precisa de arquivos e recursos locais para 
 
 Por exemplo, para pesquisar o hitórico do projeto, o Git não precisa sair para o servidor para obter a história e exibi-la - ele simplismente lê diretamente do banco de dados local. Isto significa que dá pra ver o histórico do projeto quase que instantaneamente. Se eu quiser ver as alterações feitas entre a versão atual de um arquivo e o arquivo de um mês atrás, o Git pode procurar o arquivo de um mês atrás e fazer um cálculo da diferença local, em vez de ter que pedir a um servidor remoto para faze-lo ou puxar uma versão mais antiga do arquivo do servidor remoto para fazê-lo localmente.
 
-Isto também significa que há muito pouco que voc6e não pode fazer se não tiver internet.
+Isto também significa que há muito pouco que você não pode fazer se não tiver internet.
 
 ### Git tem Integridade
 
