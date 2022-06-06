@@ -57,7 +57,7 @@ Esta é um diferença importante entre o Git e quase todos os outros VCSs. Isso 
 
 ### Quase Todas as Operações são Locais
 
-A maioria das operações no Git só precisa de arquivos e recursos locais para operar. E isso faz com que o Git seja muito rápido, pois como tenho toda a história do projeto ali mesmo no disco local, a maioria das operações parecem quase instântaneas.
+A maioria das operações no Git só precisa de arquivos e recursos locais para operar. E isso faz com que o Git seja muito rápido, pois como tenho toda a história do projeto está ali mesmo no disco local, a maioria das operações parecem quase instântaneas.
 
 Por exemplo, para pesquisar o hitórico do projeto, o Git não precisa sair para o servidor para obter a história e exibi-la - ele simplismente lê diretamente do banco de dados local. Isto significa que dá pra ver o histórico do projeto quase que instantaneamente. Se eu quiser ver as alterações feitas entre a versão atual de um arquivo e o arquivo de um mês atrás, o Git pode procurar o arquivo de um mês atrás e fazer um cálculo da diferença local, em vez de ter que pedir a um servidor remoto para faze-lo ou puxar uma versão mais antiga do arquivo do servidor remoto para fazê-lo localmente.
 
