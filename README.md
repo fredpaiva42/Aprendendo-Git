@@ -65,7 +65,7 @@ Isto também significa que há muito pouco que você não pode fazer se não tiv
 
 ### Git tem Integridade
 
-Tudo no Git passa por uma soma de verificações(*checksum*) antes de ser armazenado e é referenciado por esse *checksum*. Isto significa que é impossível mudar o conteúdo de qualquer arquivo ou pasta sem que o Git saiba. Esta funcionalidade está incorporada no Git nos níveis mais baixos e é parte integrante de sua filosofia. Eu não vou perder nenhuma informação durante a transferência e não vou receber um arquivo corrompido sem que o Git seja capaz de detectar.
+Tudo no Git passa por uma soma de verificações (*checksum*) antes de ser armazenado e é referenciado por esse *checksum*. Isto significa que é impossível mudar o conteúdo de qualquer arquivo ou pasta sem que o Git saiba. Esta funcionalidade está incorporada no Git nos níveis mais baixos e é parte integrante de sua filosofia. Eu não vou perder nenhuma informação durante a transferência e não vou receber um arquivo corrompido sem que o Git seja capaz de detectar.
 
 O mecanismo que o Git utiliza para esta soma de verificação é chamado um *hash* SHA-1. Esta é uma sequência de 40 caracteres composta de caracteres hexadecimais e é calculada com base no conteúdo de uma estrutura de arquivo ou diretório no Git.
 
@@ -75,3 +75,53 @@ Uma *hash* SHA-1 é algo como o seguinte:
 ```
 
 O Git armazena tudo em seu banco de dados não pelo nome do arquivo, mas pelo valor de *hash* do seu conteúdo.
+
+### Os Três Estados (Muito Importante!)
+
+O Git tem três estados principais que os arquivos podem estar: **commited, modificado (modified)** e o **preparado (staged)**.
+
+- *Commited*: significa que os dados estão armazenados de forma segura no banco de dados local.
+- *Modified*: significa que o arquivo foi alterado, mas ainda não foi feito o commit no banco de dados.
+- *Staged*: significa que foi marcada a versão atual de um arquivo modificado para fazer parte do próximo commit.
+
+E com isso temos as três seçoes principais de um projeto Git: **o diretório Git**, **o diretório de trabalho** e **área de preparo**.
+
+- *Git directory*: é onde o Git armazena os metadados e o banco de dados de objetos do projeto. Esta é a parte mais importante do Git, e é o que é copiado quando um repositório é clonado de outro computador.
+- *Working Directory*: é uma simples cópia de uma versão do projeto. Esses arquivos são pegos do banco de dados compactado no diretório Git e colocados no disco para ser usado ou modificado.
+- *Staging Area*: é um arquivo, geralmente contido no diretório Git, que armazena informações sobre o que vai entrar no próximo commit. É por vezes referido como "índice", mas também é comum referir-se a ele como área de preparo.
+
+![](./imgs/Principais%20seções%20de%20um%20projeto%20Git.png)
+
+**Fluxo de Trabalho básico do Git**:
+1. Você modifica arquivos no seu diretório de trabalho.
+2. Você prepara os arquivos, adicionando imagens deles à sua área de preparo.
+3. Você faz commit, o que leva os arquivos como eles estão na área de preparo e armazena essas imagens de forma permanente no diretório do Git.
+   
+Se uma versão específica de um arquivo está no diretório Git, é considerado *commited*. Se for modificado, mas foi adicionado à área de preparo, é considerado *preparado*. E se ele for alterado depois de ter sido carregado, mas não foi preparado, ele é considerado *modificado*.
+
+## Instalação do Git
+
+### Instalando no Linux
+
+Se eu quiser instalar o Git através de um instalador binário, eu posso usar a ferramenta básica de gerenciamento de pacotes que vem com a minha distribuição.
+
+Para ver como instalar em outras distribuições é só ir em http://git-scm.com/download/linux
+
+Para distribuições baseadas no **Debian** como o Ubuntu, deve se usar o `apt-get`:
+```
+   $ sudo apt-get install git-all
+```
+
+## Configuração Inicial do Git
+
+É preciso fazer essas configurações apenas uma vez por computador e os efeitos vão se manter após as atualizações. E se eu quiser mudar alguma configuração futuramente, basta rodas os mesmos comandos.
+
+O Git vem com uma ferramenta chamada `git config` que permite ver e atribuir variáveis de configuração que controlam todos os aspectos de como o Git aparece e opera. Estas variáveis podem ser armazenadas em três lugares diferentes:
+
+1. `/etc/gitconfig`: válido para todos os usuários no sistema e todos os seus repositórios. Se eu passar a opção `--system` para `git config`, ele lê e escreve neste arquivo.
+2. `~/.gitconfig` ou `~/.config/git/config`: Somente para o meu usuário. Posso fazer o Git ler e escrever neste arquivo passando a opção `--global`.
+3. `config` no diretório Git (ou seja, `.git/config`) de qualquer repositório que eu esteja usando: específico para este repositório.
+
+Cada nível sobrescreve os valores no nível anterior, ou seja, valores em `.git/config` prevalecem sobre `/etc/git/config`.
+
+No Windows, o Git procura pelo arquivo `.gitconfig` no diretório `$HOME` (`C:\Users\$USER` para a maioria). Ele também procura por `/etc/gitconfig`, mesmo sendo relativo à raiz do sistema que é onde quer que você tenha instalado Git no seu sistema.
