@@ -114,7 +114,7 @@ Para distribuições baseadas no **Debian** como o Ubuntu, deve se usar o `apt-g
 
 ## Configuração Inicial do Git
 
-É preciso fazer essas configurações apenas uma vez por computador e os efeitos vão se manter após as atualizações. E se eu quiser mudar alguma configuração futuramente, basta rodas os mesmos comandos.
+É preciso fazer essas configurações apenas uma vez por computador e os efeitos vão se manter após as atualizações. E se eu quiser mudar alguma configuração futuramente, basta rodar os mesmos comandos.
 
 O Git vem com uma ferramenta chamada `git config` que permite ver e atribuir variáveis de configuração que controlam todos os aspectos de como o Git aparece e opera. Estas variáveis podem ser armazenadas em três lugares diferentes:
 
@@ -125,3 +125,18 @@ O Git vem com uma ferramenta chamada `git config` que permite ver e atribuir var
 Cada nível sobrescreve os valores no nível anterior, ou seja, valores em `.git/config` prevalecem sobre `/etc/git/config`.
 
 No Windows, o Git procura pelo arquivo `.gitconfig` no diretório `$HOME` (`C:\Users\$USER` para a maioria). Ele também procura por `/etc/gitconfig`, mesmo sendo relativo à raiz do sistema que é onde quer que você tenha instalado Git no seu sistema.
+
+### Sua Identidade
+
+A primeira coisa que deve ser feita ao instalar o Git é configurar o nome de usuário e endereço de email. Isto é importante porque cada commit usa essa informação, e ela é carimbada de forma imutável nos commits que serão feitos.
+
+Como configurar nome de usuário e email:
+```
+$ git config --global user.name "Fulano de Tal"
+$ git config --global user.email fulanodetal@exemplo.br
+```
+> **Note**
+> This is a note
+
+> **Warning**
+> This is a warning
