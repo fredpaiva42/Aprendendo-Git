@@ -8,7 +8,7 @@ Usar um sistema de controle de versão (**VCS**) nos permite reverter para um es
 
 ### Sistemas Locais de Controle de Versão
 
-Um dos metódos de controle de versão mais populares e facéis que conhecemos é criar um diretório de backup e copiar os arquivos para esse diretório, porém apesar de ser simples, é incrivelmente propensa a erros. É fácil se esquecer em qual diretório você está e acabar sobreescrevendo o arquivo errado ou copiar algo que não tinha intenção.
+Um dos metódos de controle de versão mais populares e facéis que conhecemos é criar um diretório de backup e copiar os arquivos para esse diretório, porém apesar de ser simples, é incrivelmente propenso a erros. É fácil se esquecer em qual diretório você está e acabar sobreescrevendo o arquivo errado ou copiar algo que não tinha intenção.
 
 Para resolver esse problema, foram desenvolviddos **VCSs locais** que tem um banco de dados simples que mantêm todas as alterações nos arquivos sob controle de revisão.
 
@@ -57,9 +57,9 @@ Esta é um diferença importante entre o Git e quase todos os outros VCSs. Isso 
 
 ### Quase Todas as Operações são Locais
 
-A maioria das operações no Git só precisa de arquivos e recursos locais para operar. E isso faz com que o Git seja muito rápido, pois como tenho toda a história do projeto está ali mesmo no disco local, a maioria das operações parecem quase instântaneas.
+A maioria das operações no Git só precisa de arquivos e recursos locais para operar. E isso faz com que o Git seja muito rápido, pois como tenho toda a história do projeto ali mesmo no disco local, a maioria das operações parecem quase instântaneas.
 
-Por exemplo, para pesquisar o hitórico do projeto, o Git não precisa sair para o servidor para obter a história e exibi-la - ele simplismente lê diretamente do banco de dados local. Isto significa que dá pra ver o histórico do projeto quase que instantaneamente. Se eu quiser ver as alterações feitas entre a versão atual de um arquivo e o arquivo de um mês atrás, o Git pode procurar o arquivo de um mês atrás e fazer um cálculo da diferença local, em vez de ter que pedir a um servidor remoto para faze-lo ou puxar uma versão mais antiga do arquivo do servidor remoto para fazê-lo localmente.
+Por exemplo, para pesquisar o histórico do projeto, o Git não precisa sair para o servidor para obter a história e exibi-la - ele simplismente lê diretamente do banco de dados local. Isto significa que dá pra ver o histórico do projeto quase que instantaneamente. Se eu quiser ver as alterações feitas entre a versão atual de um arquivo e o arquivo de um mês atrás, o Git pode procurar o arquivo de um mês atrás e fazer um cálculo da diferença local, em vez de ter que pedir a um servidor remoto para faze-lo ou puxar uma versão mais antiga do arquivo do servidor remoto para fazê-lo localmente.
 
 Isto também significa que há muito pouco que você não pode fazer se não tiver internet.
 
