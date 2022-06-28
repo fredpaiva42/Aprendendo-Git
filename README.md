@@ -181,3 +181,4 @@ $ git help config
 > **Note**
 > 
 > Estes comandos podem ser acessados de qualquer lugar, mesmo desconectado. Caso seja necessária ajuda específica, basta tentar nos canais #git ou #github no servidor *IRC Freenode (irc.frenode.net)*.
+
