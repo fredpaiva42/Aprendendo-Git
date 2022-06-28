@@ -136,7 +136,48 @@ $ git config --global user.name "Fulano de Tal"
 $ git config --global user.email fulanodetal@exemplo.br
 ```
 > **Note**
-> This is a note
+> 
+> Se quiser substituir o nome para um projeto específico, basta rodar o comando sem a opção `--global` dentro daquele projeto.
 
-> **Warning**
-> This is a warning
+### Seu Editor
+
+É possível escolher o editor de texto padrão que vai ser chamado quando o Git precisar que entre com uma mensagem. Se não for configurado, o Git usará o editor padrão, que normalmente é o Vim (no linux).
+
+Para escolher um editor de texto diferente, como o Emacs, é só fazer o seguinte:
+```
+$ git config --global core.edito emacs
+```
+### Testando suas Configurações
+
+Para listar as configurações do Git, basta rodar o comando:
+```
+$ git config --list
+user.name=Fulano de Tal
+user.email=fulanodetal@exemplo.br
+color.status=auto
+color.branch=auto
+color.interactive=auto
+color.diff=auto
+...
+```
+
+Podemos ver também o que tem em uma configuração específica usando `git config <key>`:
+```
+$ git config user.name
+Fulano de Tal
+```
+## Pedindo Ajuda
+
+Se precisarmos de ajuda, há três formas de acessar a página de manual de ajuda (manpage) para qualquer um dos comandos Git:
+```
+$ git help <verb>
+$ git <verb> --help
+$ man git-<verb>
+```
+Por exemplo, dá para ver a manpage do comando *config* rodando:
+```
+$ git help config
+```
+> **Note**
+> 
+> Estes comandos podem ser acessados de qualquer lugar, mesmo desconectado. Caso seja necessária ajuda específica, basta tentar nos canais #git ou #github no servidor *IRC Freenode (irc.frenode.net)*.
