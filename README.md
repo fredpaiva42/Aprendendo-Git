@@ -210,7 +210,7 @@ E pronto um repositório Git está criado.
 
 ### Clonando um Repositório Existente
 
-Para clonar um repositório Git existente, devmos usar o comando `git clone`. E com isso o recebe uma cópia completa de praticamente todos os dados que o servidor possui. Cada versão de cada arquivo no histórico do projeto é obtida por padrão quando o `git clone` é executado. Isso se torna muito importando no caso do servidor ter sido corrompido por exemplo, pois basta usar qualquer uma das cópias de qualquer um dos clientes para reverter o servidor ao estado em que estava quando foi clonado (talvez algumas configurações do servidor sejam perdidas, mas todos os dados versionados estarão lá.)
+Para clonar um repositório Git existente, devmos usar o comando `git clone`. E com isso o Git recebe uma cópia completa de praticamente todos os dados que o servidor possui. Cada versão de cada arquivo no histórico do projeto é obtida por padrão quando o `git clone` é executado. Isso se torna muito importando no caso do servidor ter sido corrompido por exemplo, pois basta usar qualquer uma das cópias de qualquer um dos clientes para reverter o servidor ao estado em que estava quando foi clonado (talvez algumas configurações do servidor sejam perdidas, mas todos os dados versionados estarão lá.)
 
 Exemplo de como clonar um repositório:
 ```
