@@ -182,3 +182,47 @@ $ git help config
 > 
 > Estes comandos podem ser acessados de qualquer lugar, mesmo desconectado. Caso seja necessária ajuda específica, basta tentar nos canais #git ou #github no servidor *IRC Freenode (irc.frenode.net)*.
 
+## Obtendo um Repositório Git
+
+É possível obter um repositório Git de duas maneiras:  
+   1 - Pegar um repositório local que atualmente não está sobre controle de versão e transformá-lo em um repositório Git.
+   
+   2 - Fazer um clone de um repositório Git existente em outro lugar.
+
+### Inicializando um repositório em um Diretório Existente
+
+Para começar a fazer o controle de versão de um projeto existente com Git, é preciso ir para o diretório do projeto e usar o comando init:
+
+```
+$ git init
+```
+
+Isso cria um subdiretório chamado `.git` que contém todos os arquivos necessários do repositório - um esqueleto de repositório Git. 
+
+Para que um arquivo passe a ser monitorado, devemos usar o comando `git add` para especificar qual é o arquivo e logo depois usar o comando `git commit`.
+
+```
+$ git add *.c 
+$ git add LICENSE
+$ git add commit -m "inicial project version"
+```
+E pronto um repositório Git está criado.
+
+### Clonando um Repositório Existente
+
+Para clonar um repositório Git existente, devmos usar o comando `git clone`. E com isso o recebe uma cópia completa de praticamente todos os dados que o servidor possui. Cada versão de cada arquivo no histórico do projeto é obtida por padrão quando o `git clone` é executado. Isso se torna muito importando no caso do servidor ter sido corrompido por exemplo, pois basta usar qualquer uma das cópias de qualquer um dos clientes para reverter o servidor ao estado em que estava quando foi clonado (talvez algumas configurações do servidor sejam perdidas, mas todos os dados versionados estarão lá.)
+
+Exemplo de como clonar um repositório:
+```
+$ git clone [url]
+$ git clone https://github.com/libgit2/libgit2
+```
+
+Isso cria um diretório chamado **libgit2**, inicializa um diretório **.git** dentro dele, recebe todos os dados deste repositório e deixa disponível para o trabalho a cópia da última versão. Se entrarmos no novo diretório **libgit2**, veremos que todos os arquivos do projeto nele, pronto para serem editados ou utilizados. 
+
+Caso seja do nosso desejo alterar o nome do repósitorio de destino, basta adicionar o nome desejado ao lado da URL:
+```
+$ git clone [url] nome
+$ git clone https://github.com/libgit2/libgit2 mylibgit
+```
+O Git possui diversos protocolos de transferencia que podem ser utilizados. O exemplo anterior usa o protocolo **https://**, mas também pode ser encontrado **git://** ou **user@server:path/to/repo.git** que usam o protocolo de transferência SSH.
