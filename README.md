@@ -226,3 +226,42 @@ $ git clone [url] nome
 $ git clone https://github.com/libgit2/libgit2 mylibgit
 ```
 O Git possui diversos protocolos de transferencia que podem ser utilizados. O exemplo anterior usa o protocolo **https://**, mas também pode ser encontrado **git://** ou **user@server:path/to/repo.git** que usam o protocolo de transferência SSH.
+
+## Gravando Alterações no repositório
+
+Cada arquivo em um diretório de trabalho pode estar em um dos seguintes estados: **rastreado** e **não-rastreado**. 
+
+Arquivos rastreados são arquivos que foram incluidos no último snapshot (commit); eles podem ser não modificados, modificados ou preparados (adicionado ao stage). Em resumo, **arquivos rastreados são os arquivos que o Git conhece.**
+
+Arquivos não rastreados são todos os outros - aqueles arquivos do diretório que não foram incluidos no último snapshot (commit) e não estão na área de stage. Quando um repositório é clonado pela primeira vez, todos os arquivos desse repositório serão rastreados e não modificados já que o Git acabou de obtê-los e você ainda não editou nada.
+
+Assim que algum arquivo é editado, Git o consdidera modificado, porque ele foi editado desde o último commit. Você prepara os arquivos editados e então faz o commit das suas alterações, e o ciclo se repete.
+
+![](./imgs/Ciclo%20de%20vida%20do%20status%20dos%20arquivos.png)
+
+### Verificando os Status dos Arquivos
+
+A principal ferramenta para saber o estado dos arquivos é o comando `git status`. Se esse comando for executado imediatamente após clonar um repositório, vai ser visto algo assim:
+
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working directory clean
+```
+
+Isso signifca que nenhum dos arquivos rastreados foi modificado. O Git também não está vendo nenhum arquivo não rastreado, senão eles estariam listados ali. O comando também informa qual é a branch atual e se ela não divergiu com a branch do servidor. A branch do servidor por padrão vai ser sempre a "main" (antiga master).
+
+Exemplo: adicionar um README simples que não existia antes e por isso não é rastrado, e ver o que o `git status` vai reportar.
+```
+$ echo 'My Project' > README
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+  README
+nothing added to commit but untracked files present (use "git add" to track
+```
+
+É possível ver que o novo arquivo README é um arquivo não rastreado, vejamos que ele foi listado como **untracked files** no status. O Git não vai passar a incluir o arquivo nos commits a não ser que isso seja feito explicitamente. O comportamento do Git é dessa forma para evitar que arquivo binários gerados automaticamente ou outros arquivos que não são para serem incluídos sejam acidentalmente incluídos.
