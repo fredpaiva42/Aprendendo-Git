@@ -398,12 +398,12 @@ As regras para os padrões que podem ser usados no arquivo `.gitignore` são as 
 - Você pode negar um padrão ao fazê-lo iniciar com um ponto de exclamação (`!`).
   
 Padrões de nome de arquivo são como expressões regulares simplificadas usadas em ambiente *shell*:
-- (*): casa com zero ou mais caracteres.
-- [abc]: casa com qualquer caracter dentro dos colchetes (neste caso, a,b ou c).
-- (?): casa com um único caracter qualquer.
-- [0-9]: casam com qualquer caracter entre eles (neste caso, de 0 a 9).
-- (**): casa com diretórios aninhados.
-- (a/**/z): casa com `a/z, a/b/z, a/b/c/z`, e assim por diante.
+- (`*`): casa com zero ou mais caracteres.
+- `[abc]`: casa com qualquer caracter dentro dos colchetes (neste caso, a,b ou c).
+- (`?`): casa com um único caracter qualquer.
+- (`[0-9]`): casam com qualquer caracter entre eles (neste caso, de 0 a 9).
+- (`**`): casa com diretórios aninhados.
+- (`a/**/z`): casa com `a/z, a/b/z, a/b/c/z`, e assim por diante.
 
 Outro exemplo de arquivo `.gitignore`:
 ```
