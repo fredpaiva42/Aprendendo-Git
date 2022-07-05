@@ -265,3 +265,167 @@ nothing added to commit but untracked files present (use "git add" to track
 ```
 
 É possível ver que o novo arquivo README é um arquivo não rastreado, vejamos que ele foi listado como **untracked files** no status. O Git não vai passar a incluir o arquivo nos commits a não ser que isso seja feito explicitamente. O comportamento do Git é dessa forma para evitar que arquivo binários gerados automaticamente ou outros arquivos que não são para serem incluídos sejam acidentalmente incluídos.
+
+### Rastreando Arquivos Novos
+
+Para começar a rastrear um novo arquivo, é preciso usar o comando `git add`.
+
+```
+$ git add nome
+$ git add README
+```
+
+Depois de adicionado, ao executar o comandos `git status` podemos ver que agora o arquivo está sendo rastreado e preparado (staged) para o commit:
+
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file: README
+```
+
+É possível saber que o arquivo está preparado porque ele aparece sob o título "Changes to be committed". Caso seja feito o commit neste momento, a versão do arquivo que existia no instante que `git add` foi executado é a que será armazenada no histório de *snapshots*. 
+
+>**Note**: O comando `git add` recebe o caminho de um arquivo ou de um diretório. Se for um diretório, o comando adiciona todos os arquivos contidos nesse diretório recursivamente.
+
+### Preparando Arquivos Modificados
+
+Ao modificar um arquivo já rastreado, e então executar `git status`, algo assim deve aparecer:
+
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file: README
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  modified: CONTRIBUTING.md
+```
+
+O arquivo **CONTRIBUTTING.md** aparece sob a seção "Changes not staged for commit" -- que indica que um arquivo rastreado foi modificado no diretório de trabalho mas ainda não foi mandado para o stage (preparado). Para mandá-lo para o stage, é preciso executar o comando `git add`. O `git add` é um comando de múltiplos propósitos: serve para começar a rastrear arquivos e também para outras coisas, como marcar arquivos que estão em conflito de mesclagem como resolvidos. Pode ser útil pensar nesse comando mais como "adicione este conteúdo ao próximo commit". Executando `git add CONTRIBUITTING.md` e logo depois `git status`:
+
+```
+$ git add CONTRIBUTING.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file: README
+  modified: CONTRIBUTING.md
+```
+Ambos os arquivos estão preparados (no stage) e entrarão no próximo commit. Neste momento suponha que você lembrou que precisa fazer uma mudança no CONTRIBUTTING.md antes de fazer o commit. Você abre o arquivo, faz a mudança e está pronto para fazer o commit. No entanto, vamos executar `git status` mais uma vez:
+
+```
+$ vim CONTRIBUTING.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file: README
+  modified: CONTRIBUTING.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  modified: CONTRIBUTING.md
+```
+
+Agora o **CONTRIBUTTING.md** está listado como preparado (staged) e também como não preparado (unstage). Acontece que o Git põe um arquivo no stage exatamente como ele está no momento em que o comando `git add` é executado. Se `git commit` for executado agora, a versão do **CONTRIBUTTING.md** que vai para o repositório é aquela que foi adicionada com o `git add`, não a versão que está no diretório de trabalho. Se um arquivo for modificado depois de executar `git add` é necessário executar o comando novamente para que a versão mais recente seja adicionada ao stage:
+
+```
+$ git add CONTRIBUTING.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  new file: README
+  modified: CONTRIBUTING.md
+```
+
+### Status Curto
+
+O `git status` é bem completo, mas também bastante verboso. O Git também tem uma flag para status curto, que permite ver as alterações de forma mais compacta. essa flag é o comando `git status -s` ou `git status --short`:
+
+```
+$ git status -s
+ M README
+MM Rakefile
+A lib/git.rb
+M lib/simplegit.rb
+?? LICENSE.txt
+```
+
+Siginificado das letras e símbolos ao lado do nome dos arquivos:
+- `??`: Arquivos novos que não estão sendo rastreados.
+- `A`: Novos arquivos que foram adicionados a área de stage.
+- ` M`: arquivos modificados e que não foram para o stage ainda.
+- `M`: arquivos modificados que foram para o stage.
+- `MM`: arquivos modificado que foram para o stage e foram modificado novamente.
+  
+### Ignorando Arquivos
+
+Frequentemente teremos uma classe de arquivos que não queremos que sejam adicionados automaticamente pelo Git e nem mesmo que ele os mostre como não rastreado. Geralmente, esses arquivos são gerados automaticamente, tais como arquivos de log ou arquivos produzidos pelo sistema de compilação (build). Nesses casos, é possível criar um arquivo chamado `.gitignore`, contendo uma lista de padrões de nomes de arquivo que devem ser ignorados.
+
+Exemplo de `.gitignore`:
+```
+$ cat .gitignore
+*.[oa]
+*~
+```
+A primeira linha diz ao Git para ignorar arquivos que terminem com ".o" ou ".a" -- arquivos objeto ou de arquivamento, que podem ser produtos do processo de compilção. A segunda linha diz ao Git para ignorar todos os arquivos cujo nome termine com um til (~), que é usado por muitos editores de texto como o Emacs, para marcar arquivos temporários. Também é possível incluir diretórios **log, tmp** ou **pid**; documentação gerada automaticamente; e assim por diante. Configurar um arquivo `.gitignore`, antes de começar um repositório geralmente é uma boa ideia para que não sejam incluidos arquivos indesejados no repositório Git.
+
+As regras para os padrões que podem ser usados no arquivo `.gitignore` são as seguintes:
+- Linhas em branco ou começando com `#` são ignoradas.
+- Os padrões que normalmente são usados para nomes de arquivos funcionam.
+- Você pode iniciar padrões com uma barra (`/`) para evitar recursividade.
+- Você pode terminar padrões com uma barra (`/`) para especificar um diretório.
+- Você pode negar um padrão ao fazê-lo iniciar com um ponto de exclamação (`!`).
+  
+Padrões de nome de arquivo são como expressões regulares simplificadas usadas em ambiente *shell*:
+- (*): casa com zero ou mais caracteres.
+- [abc]: casa com qualquer caracter dentro dos colchetes (neste caso, a,b ou c).
+- (?): casa com um único caracter qualquer.
+- [0-9]: casam com qualquer caracter entre eles (neste caso, de 0 a 9).
+- (**): casa com diretórios aninhados.
+- (a/**/z): casa com `a/z, a/b/z, a/b/c/z`, e assim por diante.
+
+Outro exemplo de arquivo `.gitignore`:
+```
+# ignorar arquivos com extensão .a
+*.a
+
+# mas rastrear o arquivo lib.a, mesmo que você esteja ignorando os arquivos .a acima
+!lib.a
+
+# ignorar o arquivo TODO apenas no diretório atual, mas não em subdir/TODO
+/TODO
+
+# ignorar todos os arquivos no diretório build/
+build/
+
+# ignorar doc/notes.txt, mas não doc/server/arch.txt
+doc/*.txt
+
+# ignorar todos os arquivos .pdf no diretório doc/
+doc/**/*.pdf
+```
+
+>**Note**: O Github mantém uma lista com exemplos de arquivo `.gitignore`: https://github.com/github/gitignore
+
+>**Note**: Em casos simples, um repositório deve ter um único arquivo `.gitignore` em seu diretório raiz, o qual é aplicado recursivamente a todos o repositório. Contudo também é possível ter arquivos `.gitignore` adicionais em subdiretórios. As regras definidas nesses `.gitignore` internos se aplicam somente aos arquivos contidos no diretório em que estão localizados. veja `man gitignore` para mais informações.
