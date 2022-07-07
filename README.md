@@ -429,3 +429,65 @@ doc/**/*.pdf
 >**Note**: O Github mantém uma lista com exemplos de arquivo `.gitignore`: https://github.com/github/gitignore
 
 >**Note**: Em casos simples, um repositório deve ter um único arquivo `.gitignore` em seu diretório raiz, o qual é aplicado recursivamente a todos o repositório. Contudo também é possível ter arquivos `.gitignore` adicionais em subdiretórios. As regras definidas nesses `.gitignore` internos se aplicam somente aos arquivos contidos no diretório em que estão localizados. veja `man gitignore` para mais informações.
+
+### Visualizando as Alterações dentro e fora do Stage
+
+Caso queiramos saber exatamente o que foi alterado, não apenas quais arquivos, é possível usar o comando `git diff`. Ele é útil para respodender duas questões: 1 - O que foi alterado, mas ainda não foi mandado para o stage? 2 - E o que está no stage, pronto para o commit? Apesar de o `git status` respoder a essas perguntas de forma genérica, listando os nomes dos arquivos, o `git diff` exibe exatamente as linhas que foram adicionadas e removidas -- o **patch**, como costumava se chamar.  
+
+Por exemplo, se alteramos o **README** e o mandar para o stage e então alterar o **CONTRIBUTTING.md** sem mandá-lo para o stage. Se o `git status` for executado veremos:
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+  
+  modified: README
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  modified: CONTRIBUTING.md
+
+```
+
+O `git diff` nos mostrará algo do tipo:
+```
+$ git diff
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 8ebb991..643e24f 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -65,7 +65,8 @@ branch directly, things can get messy.
+ Please include a nice description of your changes when you submit your PR;
+ if we have to read the whole diff to figure out why you're contributing
+ in the first place, you're less likely to get feedback and have your change
+-merged in.
++merged in. Also, split your changes into comprehensive chunks if your patch is
++longer than a dozen lines.
+
+ If you are starting to work on a particular area, feel free to submit a PR
+ that highlights your work in progress (and note in the PR title that it's
+```
+
+Esse comando compara o que está no meu diretório de trabalho com o que está no stage. O resultado permite que saber quais alterações eu fiz que ainda não foram mandadas para o stage.
+
+Se eu quiser ver as alterações que eu já mandei para o stage e que vão estar no próximo snapshot, basta usar o `git diff --staged`. Este comando compara as alterações que estão no stage com meu último commit:
+
+```
+$ git diff --staged
+diff --git a/README b/README
+new file mode 100644
+index 0000000..03902a1
+--- /dev/null
++++ b/README
+@@ -0,0 +1 @@
++My Project
+```
+
+Se todas as alterações já tiverem sido enviadas para o stage e eu usar o `git diff` sem a flag `--staged`, a saída do `git diff` vai ser vazia, esse comando não mostra as alterações feitas desde o último commit, apenas as alterações que ainda não foram preparadas.
+
+O `git diff --staged` e o `git diff --cached` são sinônimos.
+
+>**Note**: Para ver as diferenças com uma ferramenta gráfica ou um programa externo, eu possi executar `git difftool` e ai é possível ver qualquer uma das diferenças em um software como **emerge, vimdiff** e muitos outros. Executar `git difftool --tool-help` para ver o que há disponível no meu sistema.
