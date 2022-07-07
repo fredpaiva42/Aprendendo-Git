@@ -145,7 +145,7 @@ $ git config --global user.email fulanodetal@exemplo.br
 
 Para escolher um editor de texto diferente, como o Emacs, é só fazer o seguinte:
 ```
-$ git config --global core.edito emacs
+$ git config --global core.editor emacs
 ```
 ### Testando suas Configurações
 
@@ -204,7 +204,7 @@ Para que um arquivo passe a ser monitorado, devemos usar o comando `git add` par
 ```
 $ git add *.c 
 $ git add LICENSE
-$ git add commit -m "inicial project version"
+$ git commit -m "inicial project version"
 ```
 E pronto um repositório Git está criado.
 
