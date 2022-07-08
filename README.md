@@ -491,3 +491,47 @@ Se todas as alterações já tiverem sido enviadas para o stage e eu usar o `git
 O `git diff --staged` e o `git diff --cached` são sinônimos.
 
 >**Note**: Para ver as diferenças com uma ferramenta gráfica ou um programa externo, eu possi executar `git difftool` e ai é possível ver qualquer uma das diferenças em um software como **emerge, vimdiff** e muitos outros. Executar `git difftool --tool-help` para ver o que há disponível no meu sistema.
+
+### Fazendo Commit das alterações
+
+O jeito mais simples de fazer commit é:
+```
+$ git commit
+```
+Fazendo isso, vai ser aberto o editor que foi configurado como padrão.
+
+>**Note**: O editor é determinado pela variável de ambiente **EDITOR**.
+
+o editor mostra a seguinte mensagem de texto (este é um exemplo da tela do Vim):
+```
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+#
+# Changes to be committed:
+# new file: README
+# modified: CONTRIBUTING.md
+#
+~
+~
+~
+".git/COMMIT_EDITMSG" 9L, 283C
+```
+A mensagem de commit padrão contém a saída mais recente do comando `git status`, comentada, e uma linha em branco no topo. Eu posso remover esses comentários e digitar a mensagem que eu quero ou deixar para ajudar a lembrar o que faz parte do commit.
+
+>**Note**: Para um lembrete ainda mais explícito do que foi alterado. podemos passar `-v` para o `git commit`. Isso inclui as diferenças (diff) da alteração no editor, para que possamos ver exatamente quais alterações estão entrando no commit.
+
+Quando sair do editor, o Git cria o commit com essa mensagem (com os comentários e diferenças removidos).
+
+Alternativamente, podemos digitar a mensagem do commit diretamente na linha de comando, depois da opção `-m` do comando `commit`:
+```
+$ git commit -m "Story 182: Fix benchmarks for speed"
+[master 463dc4f] Story 182: Fix benchmarks for speed
+ 2 files changed, 2 insertions(+)
+ create mode 100644 README
+```
+Assim o commit está pronto! A saída informa algumas informações: em qual branch foi feito o commit (**master**), o checksum SHA-1 (**463dc4f**), quantos arquivos foram alterados e estatísticas sobre o número de linhas adicionadas e removidas.
+
+Lembre-se de que o commit grava o snapshot que você deixou na área de stage. Qualquer alteração que você não tiver mandado para o stage permanecerá como estava, em seu lugar; você pode executar outro commit para adicioná-la ao seu histórico. Toda vez que você executa um commit,
+você está gravando um snapshot do seu projeto que você pode usar posteriormente para fazer comparações, ou mesmo restaurá-lo.
