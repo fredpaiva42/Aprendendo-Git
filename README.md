@@ -536,3 +536,72 @@ Assim o commit está pronto! A saída informa algumas informações: em qual bra
 Lembre-se de que o commit grava o snapshot que você deixou na área de stage. Qualquer alteração que você não tiver mandado para o stage permanecerá como estava, em seu lugar; você pode executar outro commit para adicioná-la ao seu histórico. Toda vez que você executa um commit,
 você está gravando um snapshot do seu projeto que você pode usar posteriormente para fazer comparações, ou mesmo restaurá-lo.
 
+### Pulando a Área de Stage
+
+Mesmo sendo muito útil para preparar os commits, a área de stage é um pouco mais complexa do que o necessário. Para pular a área de stage, o Git fornece um atalho simples. A opção `-a`, do comando `git commit`, faz o Git mandar todos arquivos rastreados para o stage automaticamente, antes de fazer o commit, permitindo pular o `git add`:
+```
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  modified: CONTRIBUTING.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+$ git commit -a -m 'added new benchmarks'
+[master 83e38c7] added new benchmarks
+ 1 file changed, 5 insertions(+), 0 deletions(-)
+
+```
+A opção `-a` inclui todos os arquivos alterados. É importante ter cuidado ao usar isso, pois as vezes alguns arquivos indesejados podem ser adicionados.
+
+### Removendo Arquivos
+
+Para remover um arquivo do Git, é preciso removê-lo dos arquivos rastreados (mais precisamente, removê-lo da área de stage) e então fazer um commit. O comando `git rm` faz isso, e também remove o arquivo do diretório de trabalho para que o arquivo não apareça com um arquivo não rastreado nas próximas interações.
+
+Se simplesmente só removermos o arquivo do diretório, ele aparecerá sob a área "Changes not staged for commit" (isto é, fora do stage) da saída do `git status`:
+```
+$ rm PROJECTS.md
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+  deleted: PROJECTS.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Mas ao executar `git rm`, o arquivo vai ser preparado para remoção (retirado do stage):
+```
+$ git rm PROJECTS.md
+rm 'PROJECTS.md'
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  deleted: PROJECTS.md
+```
+Então no próximo commit que for feito, o arquivo vai ser eliminado e não será mais rastreado. Se o arquivo tiver sido alterado ou se já tiver adicionado à área de stage, será necessário forçar a remoção com a opção `-f`. Essa é uma medida de segurança para previnir a exclusão acidental de dados que ainda não tenham sido gravados em um snapshot e que não poderão ser recuperados do histórico.
+
+Outra coisa útil que o `git rm` pode fazer é quando quisermos manter um arquivo no disco local, mas que ele não seja mais rastreado pelo Git. Isso é particularmente útil se não tiver sido adicionado no .gitignore e acidentalmente mandado para o stage, como um grande arquivo de log ou um monte de arquivos compilados `.a`. Para fazer isso, use a opção `--cached`:
+```
+$ git rm --cached README
+```
+É possível passar arquivos, diretórios e padrões de nomes para o comando `git rm`. Coisas como:
+```
+$ git rm log/\*.log
+```
+A barra invertida na frente do `*` é necessária porque o Git faz sua própria expansão de nomes de arquivos em adição a que é feita pelo shell. Esse comando remove todos os arquivos que tenham a extensão `.log` do diretório `log/`.
+
+Ou, fazer algo como o seguinte:
+```
+$ git rm \*~
+```
+Esse comando remove todos os arquivos cujos nomes terminem com um `~`.
