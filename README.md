@@ -605,3 +605,75 @@ Ou, fazer algo como o seguinte:
 $ git rm \*~
 ```
 Esse comando remove todos os arquivos cujos nomes terminem com um `~`.
+
+### Movendo Arquivos
+
+Diferente de outros VCS's, o Git não rastreia explicitamente movimentação de arquivos. Se eu renomear um arquivo no Git, ele não armazena metadados indicando que determinado arquivo foi renomeado. Pórem, o Git é bastante esperto para perceber isso depois do fato ocorrido.
+
+É possível renomear o arquivo usando um comando do Git:
+```
+$ git mv arq_origem arq_destino
+```
+Exemplo: 
+```
+$ git mv README.md README
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+  renamed: README.md -> README
+
+```
+
+No entanto, isso é equivalente a executar:
+```
+$ mv README.md README
+$ git rm README.md
+$ git add README
+```
+O Git percebe que, implicitamente, se trata de um arquivo renomeado, de maneira que não importa o jeito que o arquivo foi renomeado. A única diferença real é que `git mv` é um comando em vez de três. Mais importante, eu posso usar qualquer ferramenta pra renomear o arquivo e cuidar do `add/rm` depois, antes de fazer o commit.
+
+## Vendo o histórico de Commits
+
+Depois de ter criado vários commits ou se eu tiver clonado um repositório com um histórico de commits pré-existente, é possível ver esse histórico. O comando para isso é `git log`.
+
+Exemplo de saida do `git log`:
+```
+$ git log
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+
+  changed the version number
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Sat Mar 15 16:40:33 2008 -0700
+
+  removed unnecessary test
+
+commit a11bef06a3f659402fe7563abf99ad00de2209e6
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Sat Mar 15 10:31:28 2008 -0700
+
+  first commit
+```
+Por padrão, sem argumentos, `git log` lista os commits feitos no repositório em ordem cronológica inversa; O commit mais recente aparece primeiro. Esse comando mostra lista de cada commit com o checksum SHA-1, o nome e email do autor, data de inserção e a mensagem do commit. 
+
+Variações do `git log` que podem ser usadas:
+- `git log -p`: mostra as diferenças introduzidas em cada commit.
+- `git log -2`: lista no retorno apenas os últimos 2 commits.
+- `git log --stat`: mostra algumas estatísticas abreviadas para cada commit. Lista de arquivos modificados, quantos arquivos foram modificados, e quantas linhas nestes arquivos foram adicionadas ou removidas.
+- `git log --pretty=oneline`: mostra cada commit em única linha. é possível usar o valor **short, full e fuller** no lugar do **oneline**.
+- `git log --pretty=format:"%h - %an, %ar : %s"`: permite especificar o formato que eu quero de retorno.
+  - Exemplo:
+    ```
+      $ git log --pretty=format:"%h - %an, %ar : %s"
+      ca82a6d - Scott Chacon, 6 years ago : changed the version number
+      085bb3b - Scott Chacon, 6 years ago : removed unnecessary test
+      a11bef0 - Scott Chacon, 6 years ago : first commit
+    ```
+  - Lista com opções úteis para o `git log --pretty=format`:
+     ![](./imgs/Opções%20úteis%20para%20o%20git%20logo%20pretty=format.png)  
